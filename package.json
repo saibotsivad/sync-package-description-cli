@@ -1,0 +1,22 @@
+{
+  "name": "sync-package-description-cli",
+  "version": "1.0.0",
+  "description": "Synchronize an npm package.json description to Github.",
+  "bin": {
+    "sync-package-description": "bin.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saibotsivad/sync-package-description-cli.git"
+  },
+  "author": "saibotsivad",
+  "license": "VOL",
+  "bugs": {
+    "url": "https://github.com/saibotsivad/sync-package-description-cli/issues"
+  },
+  "homepage": "https://github.com/saibotsivad/sync-package-description-cli#readme",
+  "dependencies": {
+    "read-pkg": "^2.0.0",
+    "sync-package-description": "^1.0.0"
+  }
+}
