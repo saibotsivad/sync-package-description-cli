@@ -35,16 +35,16 @@ export SYNC_PACKAGE_DESCRIPTION_AUTH='{"type":"token","token":"<TOKEN VALUE>"}'
 
 ## test
 
-Make sure everything is configured correctly:
+Make sure everything is configured correctly by passing it the `test` parameter:
 
 ```bash
-sync-package-description
+sync-package-description test
 # Success!
 ```
 
 ## run it for a single module
 
-Go into some module that you want to sync, and simply run the command:
+Go into some module that you want to sync, and run the command:
 
 ```
 sync-package-description
@@ -52,6 +52,13 @@ sync-package-description
 
 If the operation is a success, there will be no output. Check your Github
 repo to see your updated description!
+
+You can run it in verbose mode:
+
+```
+sync-package-description -v
+# Updated Github description for 'your-module-name'.
+```
 
 ## git hook
 
@@ -66,7 +73,9 @@ For a single repo, add a file named `pre-push` that looks like:
 sync-package-description
 ```
 
-To the file `.git/hooks/pre-push` in your repo.
+Add that to the file `.git/hooks/pre-push` in your repo.
+
+## global git hook
 
 For a global solution, based on [this Stackoverflow answer](http://stackoverflow.com/questions/2293498/git-commit-hooks-global-settings).
 
