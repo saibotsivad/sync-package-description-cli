@@ -17,7 +17,6 @@ if (!authenticate || !Object.keys(authenticate).length) {
 }
 
 if (process.argv[2] === 'test') {
-	// maybe check that the git token works
 	console.log('Success!')
 	process.exit(0)
 }
@@ -30,11 +29,13 @@ readPackage('./')
 		sync('./')
 			.then(() => {
 				if (verbose) {
-					console.log(`Updated Github description for ${package.name}.`)
+					console.log(`Updated Github description for '${package.name}'.`)
 				}
 			})
 			.catch(error => {
-				console.log('Error updating Github repo description:', error.message || error)
+				if (verbose) {
+					console.log('Error updating Github repo description:', error.message || error)
+				}
 			})
 	})
 	.catch(error => {
