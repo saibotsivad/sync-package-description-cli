@@ -1,6 +1,6 @@
 {
   "name": "sync-package-description-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Synchronize an npm package.json description to Github.",
   "bin": {
     "sync-package-description": "bin.js"
