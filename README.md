@@ -53,6 +53,34 @@ sync-package-description
 If the operation is a success, there will be no output. Check your Github
 repo to see your updated description!
 
+## git hook
+
+If you want this to run every time you run `git push` than you will
+want to add a [`pre-push` hook](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks).
+
+For a single repo, add a file named `pre-push` that looks like:
+
+```bash
+#!/bin/sh
+
+sync-package-description
+```
+
+To the file `.git/hooks/pre-push` in your repo.
+
+For a global solution, based on [this Stackoverflow answer](http://stackoverflow.com/questions/2293498/git-commit-hooks-global-settings).
+
+1. In your `dotfiles` folder add a folder named something like `git-templates`, and
+	in that folder add a `hooks` folder. Inside that folder, create a file named
+	`pre-push` and put the above contents in it. You'll need to `chmod +x` it.
+2. Set the environment variable `GIT_TEMPLATE_DIR` in your bash profile to the
+	`git-templates` folder you've made.
+
+Now in any git repo you make, it'll add those hooks.
+
+Also, according to the same Stackoverflow thread, and my personal experience,
+running `git init` in a folder will not overwrite history or break things.
+
 ## license
 
 Published and released under the [VOL](http://veryopenlicense.com).
