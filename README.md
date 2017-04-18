@@ -22,8 +22,9 @@ the environment variable `SYNC_PACKAGE_DESCRIPTION_AUTH`.
 
 Go [create a token](https://github.com/settings/tokens/new) and
 give it `Full control of private repositories`. (If you know a
-more restrictive permission, please
-[file an issue](https://github.com/saibotsivad/sync-package-description/issues)!)
+more restrictive permission that still works, please
+[file an issue](https://github.com/saibotsivad/sync-package-description/issues)
+and let me know!)
 
 It's probably going to be easiest to add it to your `~/.profile` file:
 
@@ -44,14 +45,14 @@ sync-package-description test
 
 ## run it for a single module
 
-Go into some module that you want to sync, and run the command:
+Go into some module folder that you want to sync, and run the command:
 
 ```
 sync-package-description
 ```
 
-If the operation is a success, there will be no output. Check your Github
-repo to see your updated description!
+If the operation is a success, there will be no output (the application will
+exit with a `0`). Check your Github repo to see your updated description!
 
 You can run it in verbose mode:
 
@@ -60,35 +61,25 @@ sync-package-description -v
 # Updated Github description for 'your-module-name'.
 ```
 
-## git hook
+## run automatically
 
-If you want this to run every time you run `git push` than you will
-want to add a [`pre-push` hook](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks).
+A good way to have this run automatically might be to add it to
+your `~/.profile` script as part of a set of operations you should
+be running each time you `npm publish`.
 
-For a single repo, add a file named `pre-push` that looks like:
+Here is the section of my own `~/.profile` script:
 
 ```bash
-#!/bin/sh
-
-sync-package-description
+export SYNC_PACKAGE_DESCRIPTION_AUTH='{"type":"token","token":"<TOKEN>"}'
+# npm publishing hooks
+alias pre-version='git diff --exit-code && npm prune && npm install -q && npm test'
+# scroll to the end to see the command
+alias post-version='(npm run build; exit 0) && git diff --exit-code && git push && git push --tags && npm publish && sync-package-description'
+# use these to publish versions to npm
+alias patch="pre-version && npm version patch && post-version"
+alias feature="pre-version && npm version minor && post-version"
+alias breaking="pre-version && npm version major && post-version"
 ```
-
-Add that to the file `.git/hooks/pre-push` in your repo.
-
-## global git hook
-
-For a global solution, based on [this Stackoverflow answer](http://stackoverflow.com/questions/2293498/git-commit-hooks-global-settings).
-
-1. In your `dotfiles` folder add a folder named something like `git-templates`, and
-	in that folder add a `hooks` folder. Inside that folder, create a file named
-	`pre-push` and put the above contents in it. You'll need to `chmod +x` it.
-2. Set the environment variable `GIT_TEMPLATE_DIR` in your bash profile to the
-	`git-templates` folder you've made.
-
-Now in any git repo you make, it'll add those hooks.
-
-Also, according to the same Stackoverflow thread, and my personal experience,
-running `git init` in a folder will not overwrite history or break things.
 
 ## license
 
