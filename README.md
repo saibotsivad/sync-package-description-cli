@@ -1,5 +1,7 @@
 # sync-package-description-cli
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/saibotsivad/sync-package-description-cli.svg)](https://greenkeeper.io/)
+
 Ever notice how the description in your `package.json` file
 and your Github repo description don't quite match?
 
